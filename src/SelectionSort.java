@@ -25,12 +25,16 @@
 public class SelectionSort implements SortAlgorithm {
 
     @Override
-    public String getName() { return "Selection Sort"; }
+    public String getName() {
+
+        return "Selection Sort";
+    }
 
 
     @Override
     public void sort(SortArray arr) {
         // TODO: write selection sort here
+
 
     }
 }
