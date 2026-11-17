@@ -34,7 +34,17 @@ public class SelectionSort implements SortAlgorithm {
     @Override
     public void sort(SortArray arr) {
         // TODO: write selection sort here
-
+        int x = arr.size();
+        for (int i = 0; i < x; i++) {
+            int minval = i;
+            for (int j = i; j < x; j++) {
+                if (arr.less(j, minval)) {
+                    minval = j;
+                }
+            }
+            arr.swap(i,minval);
+            arr.mark("i="+i+" min="+minval);
+        }
 
     }
 }
