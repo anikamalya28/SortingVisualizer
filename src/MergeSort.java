@@ -49,6 +49,19 @@ public class MergeSort implements SortAlgorithm {
 
     }
 
+/*
+    public void bottomUpMergeSort(SortArray arr, Item[] temp) {
+        int n = arr.size()-1;
+        for (int size = 1; size < n; size = size * 2) {
+            for (int lo = 0; lo < n-size; lo = lo + 2*size) {
+                int mid = lo + size -1;
+                int hi = Math.min(lo + 2*size - 1, n-1);
+                merge(arr, temp, lo, mid, hi);
+            }
+        }
+    }
+*/
+
     private void mergeSort(SortArray arr, Item[] temp, int lo, int hi) {
         if (lo >= hi) {
             return;

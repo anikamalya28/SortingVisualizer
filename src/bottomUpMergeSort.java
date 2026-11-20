@@ -1,0 +1,100 @@
+/**
+ * =====================================================================
+ *  DAY 3  -  MERGE SORT
+ * =====================================================================
+ *
+ *  THE IDEA  (divide and conquer)
+ *   1. Split the list in half.
+ *   2. Sort each half (using merge sort! - this is recursion).
+ *   3. MERGE the two sorted halves into one sorted list.
+ *  A list with 0 or 1 items is already sorted - that's your base case.
+ *
+ *  MERGING two sorted halves  a[lo..mid]  and  a[mid+1..hi]:
+ *   - Copy a[lo..hi] into a temporary array first:   temp[k] = arr.get(k);
+ *   - Keep one "finger" at the start of each half (in temp).
+ *   - Compare the two items under your fingers, write the smaller one back
+ *     into the list with arr.set(k, ...), and move that finger forward.
+ *   - When one half runs out, copy the rest of the other half.
+ *
+ *  SUGGESTED STRUCTURE (you write the bodies):
+ *      public void sort(SortArray arr)                        -> make temp, call mergeSort on the whole list
+ *      private void mergeSort(SortArray arr, Item[] temp, int lo, int hi)
+ *      private void merge(SortArray arr, Item[] temp, int lo, int mid, int hi)
+ *
+ *  TOOLS
+ *      Item[] temp = new Item[arr.size()];   a temporary array
+ *      arr.get(k)                            read an item (free)
+ *      arr.less(temp[i], temp[j])            compare two items you are holding
+ *      arr.set(k, item)                      write an item into the list
+ *
+ *  ANALYSIS QUESTIONS
+ *   1. Merge sort makes 0 swaps. Why? What does it do instead?
+ *   2. Try n = 16, 32, 64 Random. Does the comparison count roughly fit n * log2(n)?
+ *   3. Does merge sort care whether the data starts sorted, reversed or random?
+ *   4. Is your merge sort stable? (Hint: when two items are EQUAL, which one goes first?)
+ */
+public class bottomUpMergeSort implements SortAlgorithm {
+
+    @Override
+    public String getName() {
+        return "Bottom Up Merge Sort";
+    }
+
+
+    @Override
+    public void sort(SortArray arr) {
+        int n = arr.size();
+        for (int size = 1; size < n; size = size * 2) {
+            for (int lo = 0; lo < n-size; lo = lo + 2*size) {
+                int mid = lo + size -1;
+                int hi = Math.min(lo + 2*size - 1, n-1);
+                merge(arr, new Item[arr.size()], lo, mid, hi);
+            }
+        }
+        // TODO: write merge sort here (add helper methods below)
+
+    }
+
+
+
+
+    private void mergeSort(SortArray arr, Item[] temp, int lo, int hi) {
+        if (lo >= hi) {
+            return;
+        }
+        int mid = lo + (hi - lo) / 2;
+        mergeSort(arr, temp, lo, mid);
+        mergeSort(arr, temp, mid + 1, hi);
+        merge(arr, temp, lo, mid, hi);
+    }
+
+    private void merge(SortArray arr, Item[] temp, int lo, int mid, int hi) {
+        int i = lo;
+        int j = mid + 1;
+        //int put = 0;
+
+        for (int k = lo; k <= hi; k++) {
+            temp[k] = arr.get(k);
+        }
+
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid && j <= hi) {
+                arr.set(k, temp[j]);
+                j++;
+            } else if (i <= mid && j > hi) {
+                arr.set(k, temp[i]);
+                i++;
+            } else if (i > mid && j > hi) {
+                return;
+            } else if (i <= mid && !arr.less(temp[j], temp[i])) {
+                arr.set(k, temp[i]);
+                i++;
+            } else if (j <= hi && !arr.less(temp[i], temp[j])) {
+                arr.set(k, temp[j]);
+                j++;
+            }
+
+        }
+    }
+
+}
