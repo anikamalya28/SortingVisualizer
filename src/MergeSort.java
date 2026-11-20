@@ -85,15 +85,6 @@ public class MergeSort implements SortAlgorithm {
                 j++;
             }
 
-        /*
-        for (int k = lo; k <= mid; k++) {
-            if (arr.less(temp[i], temp[j])) {
-
-            }
-        }
-        */
-
-
         }
     }
 
