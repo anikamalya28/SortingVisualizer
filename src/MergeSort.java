@@ -36,12 +36,65 @@
 public class MergeSort implements SortAlgorithm {
 
     @Override
-    public String getName() { return "Merge Sort"; }
+    public String getName() {
+        return "Merge Sort";
+    }
 
 
     @Override
     public void sort(SortArray arr) {
         // TODO: write merge sort here (add helper methods below)
+        Item[] temp = new Item[arr.size()];
+        mergeSort(arr, temp, 0, arr.size() - 1);
 
     }
+
+    private void mergeSort(SortArray arr, Item[] temp, int lo, int hi) {
+        if (lo >= hi) {
+            return;
+        }
+        int mid = lo + (hi - lo) / 2;
+        mergeSort(arr, temp, lo, mid);
+        mergeSort(arr, temp, mid + 1, hi);
+        merge(arr, temp, lo, mid, hi);
+    }
+
+    private void merge(SortArray arr, Item[] temp, int lo, int mid, int hi) {
+        int i = lo;
+        int j = mid + 1;
+        //int put = 0;
+
+        for (int k = lo; k <= hi; k++) {
+            temp[k] = arr.get(k);
+        }
+
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid && j <= hi) {
+                arr.set(k, temp[j]);
+                j++;
+            } else if (i <= mid && j > hi) {
+                arr.set(k, temp[i]);
+                i++;
+            } else if (i > mid && j > hi) {
+                return;
+            } else if (i <= mid && !arr.less(temp[j], temp[i])) {
+                arr.set(k, temp[i]);
+                i++;
+            } else if (j <= hi && !arr.less(temp[i], temp[j])) {
+                arr.set(k, temp[j]);
+                j++;
+            }
+
+        /*
+        for (int k = lo; k <= mid; k++) {
+            if (arr.less(temp[i], temp[j])) {
+
+            }
+        }
+        */
+
+
+        }
+    }
+
 }
