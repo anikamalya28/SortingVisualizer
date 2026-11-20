@@ -39,6 +39,8 @@ public class ShellSort implements SortAlgorithm {
             h = 3*h+1;
         }
         h = (h-1)/3;
+
+        
         while (h > 1) {
             for (int i = 0; i < arr.size() - h; i += h) {
                 for (int j = 0; j < h; j++) {
@@ -58,6 +60,7 @@ public class ShellSort implements SortAlgorithm {
             }
             arr.mark("i="+i);
         }
+        
 
     }
 }
